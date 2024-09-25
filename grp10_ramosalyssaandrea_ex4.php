@@ -1,5 +1,6 @@
 <?php
-session_start(); // Start the session to store success and error messages
+// Start the session to store success and error messages
+session_start(); 
 
 // Array to hold team member data (unchanged)
 $team_members = [
@@ -14,7 +15,6 @@ $team_members = [
         "coursera" => "https://www.coursera.org/user/364687d7c6ca22d8c9086676a9842a1b",
         "linkedin" => "https://www.linkedin.com/in/alyssa-andrea-ramos-3a85b5189"
     ],
-    
     [
         "name" => "John Wengelbert M. Malic",
         "role" => "MEMBER",
@@ -37,26 +37,26 @@ $team_members = [
         "coursera" => "https://www.coursera.org/user/cf02d1f5ea9f2cfa2f490ef7c19a9df3",
         "linkedin" => "https://www.linkedin.com/in/lanieri-moleta-b4003a323/"
     ]
-
-
 ];
 
 // Initialize variables for form input
 $name = $email = $message = "";
 
 // Handle form submission
+// USING POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // GET form data
+    // USING GET in the form data
     $name = htmlspecialchars(trim($_POST['name']));
     $email = htmlspecialchars(trim($_POST['email']));
     $message = htmlspecialchars(trim($_POST['message']));
 
-    // Validate input
+    // Validating the input
     if (empty($name) || empty($email) || empty($message)) {
         $_SESSION['contact_error'] = "All fields are required.";
     } else {
+        
         // Send email (this is just an example, and will only work if your server supports sending emails)
-        $to = "your-email@example.com"; // Replace with your email
+        $to = "your-email@example.com"; 
         $subject = "New Contact Form Submission from $name";
         $body = "Name: $name\nEmail: $email\nMessage:\n$message";
         $headers = "From: $email";
@@ -64,14 +64,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (mail($to, $subject, $body, $headers)) {
             // Store success message in session
             $_SESSION['contact_success'] = "Thank you for contacting us, $name. We will get back to you soon.";
-            // Store submitted data in session for use in JavaScript
-            $_SESSION['submitted_data'] = json_encode([
-                'name' => $name,
-                'email' => $email,
-                'message' => $message,
-            ]);
-        
         }
+
+        // Store submitted data in session for use in JavaScript
+        $_SESSION['submitted_data'] = json_encode([
+            'name' => $name,
+            'email' => $email,
+            'message' => $message,
+        ]);
     }
 }
 ?>
@@ -83,7 +83,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Team Profile of Group 10</title>
     <style>
-         body, ul {
+       
+       body, ul {
             margin: 0;
             padding: 0;
             font-family: 'Poppins', sans-serif; 
@@ -95,16 +96,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         header {
-    display: flex;
-    justify-content: space-between; 
-    align-items: center; 
-    background-color: #000;
-    padding: 10px 20px; 
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 1000;
+        display: flex;
+        justify-content: space-between; 
+        align-items: center; 
+        background-color: #000;
+        padding: 10px 20px; 
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 1000;
 }
 
         h1 {
@@ -222,7 +223,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             color: #ff7e5f; 
         }
 
-        /* Modal Styles */
         .modal {
             display: none;
             position: fixed;
@@ -287,10 +287,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             color: #fff; 
         }
         .nav-container {
-    display: flex; 
-    align-items: center; 
-    margin-left: 0; 
-    padding-right: 20px; 
+         display: flex; 
+         align-items: center; 
+         margin-left: 0; 
+         padding-right: 20px; 
 }
         .contact-button {
         float: right; 
@@ -388,7 +388,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <textarea name="message" placeholder="Your Message" rows="4" required></textarea>
                 <button type="submit" class="send-button">Send Message</button>
             </form>
-
             <?php if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($name) && !empty($email) && !empty($message)): ?>
                 <h3>Your Recent Input:</h3>
                 <p>Name: <?php echo htmlspecialchars($name); ?></p>
@@ -454,12 +453,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             document.getElementById('modalGithub').href = member.github;
             document.getElementById('modalCoursera').href = member.coursera;
             document.getElementById('modalLinkedin').href = member.linkedin;
-
             document.getElementById('myModal').style.display = 'block';
         }
 
         function closeModal() {
-            document.getElementById('myModal').style.display = "none";
+            document.getElementById('myModal').style.display = 'none';
         }
 
         function openContactModal() {
@@ -467,11 +465,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         function closeContactModal() {
-            document.getElementById('contactModal').style.display = "none";
+            document.getElementById('contactModal').style.display = 'none';
         }
 
         function closeConfirmationModal() {
-            document.getElementById('confirmationModal').style.display = "none";
+            document.getElementById('confirmationModal').style.display = 'none';
         }
 
         // Display confirmation modal after form submission
@@ -481,7 +479,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             document.getElementById('confirmEmail').innerText = submittedData.email;
             document.getElementById('confirmMessage').innerText = submittedData.message;
             document.getElementById('confirmationModal').style.display = 'block';
-            <?php unset($_SESSION['submitted_data']); ?> // Clear the submitted data
+            <?php unset($_SESSION['submitted_data']);  ?>
         <?php endif; ?>
     </script>
 </body>
